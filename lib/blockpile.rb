@@ -2,7 +2,7 @@ class Blockpile
   
   def initialize(helper)
     @helper = helper
-    @path   = '/app/views/piles/'
+    @path   = '/app/views/blockpiles/'
   end
   
   def to_html
