@@ -13,7 +13,7 @@ protected
   
   # Assumes /views/helper/ as base
   def render_template(template)
-    ERB.new( File.read(RAILS_ROOT + @path + template + ".html.erb") ).result binding
+    ERB.new( File.read(Rails.root.to_s + @path + template + ".html.erb") ).result binding
   end
   
   def method_missing(*args, &block)
