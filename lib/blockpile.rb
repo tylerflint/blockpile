@@ -1,7 +1,5 @@
 class Blockpile
   
-  attr_accessor :helper, :session, :params
-  
   def initialize(helper, session, params, template, *args)
     @helper = helper
     @session = session
