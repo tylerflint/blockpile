@@ -1,19 +1,29 @@
 class Blockpile
   
-  def initialize(helper)
+  attr_accessor :helper, :session, :params
+  
+  def initialize(helper, session, params, template, *args)
     @helper = helper
-    @path   = '/app/views/blockpiles/'
+    @session = session
+    @params = params
+    @template = template
+    build *args
   end
   
   def to_html
     render_template @template
   end
   
+  def build
+    # override this method to build your block
+  end
+  
 protected
   
   # Assumes /views/helper/ as base
   def render_template(template)
-    ERB.new( File.read(RAILS_ROOT + @path + template + ".html.erb") ).result binding
+    @path ||= '/app/views/blockpiles/'
+    ERB.new( File.read(Rails.root.to_s + @path + template + ".html.erb") ).result binding
   end
   
   def method_missing(*args, &block)
