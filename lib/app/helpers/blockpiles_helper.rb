@@ -1,14 +1,15 @@
 module BlockpilesHelper
   
-  def method_missing(sym, *args, &block)
-    begin
-      object_sym = sym.to_s.split(/\_/).collect {|item| item.capitalize}.join.to_sym
-      block = Object.const_get(object_sym).send(:new, self, session, params, sym.to_s, *args) 
-      yield block
-      raw block.to_html
-    rescue 
-      # do something here
-    end
+  Dir.glob(Rails.root.to_s + '/app/blockpiles/*') do |file|
+    file_name   = file.split(/\//).pop.gsub(/.rb/, '')
+    class_name  = file_name.split("_").collect {|i| i.capitalize }.join
+    class_eval %{
+      def #{file_name}(*args, &block)
+          block = #{class_name}.new(self, session, params, '#{file_name}', *args)
+          yield block
+          raw block.to_html
+      end
+    }
   end
-  
+
 end
