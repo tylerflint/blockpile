@@ -1,6 +1,7 @@
-# include our custom helper in ActionView
-path = File.join(File.dirname(__FILE__), 'lib', 'app', 'helpers') 
-$LOAD_PATH << path 
-ActiveSupport::Dependencies.load_paths << path 
-ActiveSupport::Dependencies.load_once_paths.delete(path) 
+# include our custom helper paths in ActionView
+helper_path     = File.join(File.dirname(__FILE__), 'lib', 'app', 'helpers') 
+blockpile_path  = File.join(Rails.root.to_s, 'app', 'helpers', 'blockpiles')
+ActiveSupport::Dependencies.autoload_paths << helper_path << blockpile_path
+
+# include the blockpiles helper
 ActionView::Base.send :include, BlockpilesHelper
