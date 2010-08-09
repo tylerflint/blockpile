@@ -1,31 +1,17 @@
-class Blockpile
-  
-  def initialize(helper, session, params, template, *args)
-    @helper = helper
-    @session = session
-    @params = params
-    @template = template
-    build *args
+require 'rails'
+require 'blockpile/setup'
+require 'blockpile/base'
+
+module Blockpile
+  class Railtie < Rails::Railtie
+    initializer "blockpile.setup default directories" do
+      Blockpile.setup do |config|
+        config.add_load_path Rails.root.to_s + '/app/helpers/blockpiles/'
+      end
+    end
   end
   
-  def to_html
-    render_template @template
+  def self.setup
+    yield Blockpile::Setup
   end
-  
-  def build
-    # override this method to build your block
-  end
-  
-protected
-  
-  # Assumes /views/helper/ as base
-  def render_template(template)
-    @path ||= '/app/views/blockpiles/'
-    ERB.new( File.read(Rails.root.to_s + @path + template + ".html.erb") ).result binding
-  end
-  
-  def method_missing(*args, &block)
-    @helper.send(*args, &block)
-  end
-  
 end

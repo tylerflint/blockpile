@@ -21,3 +21,18 @@ Rake::RDocTask.new(:rdoc) do |rdoc|
   rdoc.rdoc_files.include('README')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "blockpile"
+    gemspec.summary = "piles of extendable rails view blocks, triggered and masked behind simple helpers"
+    gemspec.description = "This module attempts to create structured view helpers. Essentially, a blockpile consists of a ruby class file, and a template. This allows for isolated blocks of view logic, that can maintain a clean separation of markup language from ruby code. Blocks can be inherited from to DRY up view logic."
+    gemspec.email = "tylerflint@gmail.com"
+    gemspec.homepage = "http://github.com/tylerflint/blockpile"
+    gemspec.authors = ["Tyler Flint"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end
+
