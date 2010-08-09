@@ -52,7 +52,23 @@ Before we move on, let me add that I'm not trashing the Redmine code-base. In fa
 
 == Enter Blockpile
 
+A blockpile solves this particular problem by slicing the view layer into 2 finer layers: logic, and template. It is no different than a controller/template relationship, except that a blockpile can be easily distributed across the application just as a helper method can.
 
+From a high level, a blockpile consists of 3 components:
+
+* A Ruby Class file
+* A template file (erb only for now, others coming soon)
+* A function call to include the blockpile in your existing templates
+
+== Example
+
+To keep this example simple, I'll show you one way to clean up the example above. Since I'm lazy, I'm not actually going to fix the example above but show the concept which could be filled in later.
+
+=== Ruby Class file
+
+=== A template file
+
+=== function call
 
 
 
