@@ -65,13 +65,75 @@ From a high level, a blockpile consists of 3 components:
 To keep this example simple, I'll show you one way to clean up the example above. Since I'm lazy, I'm not actually going to fix the example above but show the concept which could be filled in later.
 
 === Ruby Class file
+	# app/helpers/blockpiles/project_hierarchy.erb
+	
+	# this is a hypothetical solution to the above helper.
+	
+	class ProjectHierarchy < Blockpile::Base
+
+	  def build(options={})
+		# use this instead of initialize
+		@projects = options[:project]
+		prepare_hierarchy
+	  end
+	
+	  def prepare_hierarchy
+	    # fill in hierarchy here
+	  end
+	
+	  def projects
+		# fill in code
+	  end
+	
+	  def project_children
+	    # could return project children
+	  end
+	
+	end
+
+Here we can take care of all logic, in preparation for the view. We need not interpolate, as the template file will pull data from this class instance when needed. Here we can focus on the beauty and elegance of Ruby, and not on the mixture of presentation.
 
 === A template file
 
-=== function call
+	# app/views/blockpiles/project_hierarchy.html.erb
+	
+	
+	<ul>
+		<% projects.each do |project| %>
+		
+			<li><%= project.name %></li>
+			
+			<% project_children.each do |child| %>
+				<li class="child"><%= child.name %></li>
+			<% end %>
+		
+		<% end %>
+	</ul>
+	
+The purpose of the template file is to "pull" logic from the Blockpile Class. We are assuming all logic will be taken care of in the class, and here we can simply focus on our view presentation, using only conditional logic (if else etc).
 
+=== helper-like function call
 
+	# app/views/{controller}/{action}.html.erb
+	
+	<%= project_hierarchy :project => @project %>
 
+There is no boiler plate for turning your Blockpile Class into a helper method, it happens under the hood. Notice we are passing @project, that will be available in your class through the options hash in the build function. The input of the builder method is completely up to you. In this example I chose to use an "options" hash. You could replace that with 3 input arguments instead if you prefer, in which case you would simply pass @project instead of assigning to a hash key.
 
+=== Summary
+	
+In essence, what could be a horrible nest of string interpolation and logic, can become a clean isolation of logic and markup language. I realize this sample solution is lacking, but I'll leave the actual logic to the developer. 
+
+=== Generator
+
+You can quickly create a Blockpile Class and Template pair by using the generator:
+
+	rails generate blockpile project_hierarchy
+	
+And thats it! You now have a Blockpile ready for use, with a helper method called "project_hierarchy".
+
+== Customize your piles
+
+Coming soon.
 
 Copyright (c) 2010 Tyler Flint, released under the MIT license
