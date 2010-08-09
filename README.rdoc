@@ -74,4 +74,4 @@ To keep this example simple, I'll show you one way to clean up the example above
 
 
 
-Copyright (c) 2010 [name of plugin creator], released under the MIT license
+Copyright (c) 2010 Tyler Flint, released under the MIT license
