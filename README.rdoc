@@ -1,0 +1,51 @@
+== Blockpile
+
+Piles of extendable rails view blocks, triggered and masked behind simple helpers
+
+== What?
+
+Sometimes within rails, view logic can become complex. As complexity begins to increase, a common theme or pattern occurs:
+
+* View logic begins to grow overly complex for what makes sense in view templates. Lengthy, confusing, and downright dirty views cause you to loose sleep.
+* Logic is broken out of the view templates and placed into the controller.
+* Eventually, when the view logic is needed in another request, the only solution is to pull the entire logic into a helper method.
+
+So what's the problem?
+
+Rails view helpers are great for view logic, and especially for small reusable view components. Unfortunately, complex view logic is almost always a rats nest of logic and string interpolation inside a helper. In fact, I'm still not sure how this has become a viable solution for rails developers, as it seems to go against what I understand to be the "rails way". To their defense, there simply isn't any other way. Until now!
+
+To better illustrate the problem, I decided to insert a snippet of a rails view helper from a popular project management tool "Redmine":
+
+  def render_project_hierarchy(projects)
+    s = ''
+    if projects.any?
+      ancestors = []
+      projects.each do |project|
+        if (ancestors.empty? || project.is_descendant_of?(ancestors.last))
+          s << "<ul class='projects #{ ancestors.empty? ? 'root' : nil}'>\n"
+        else
+          ancestors.pop
+          s << "</li>"
+          while (ancestors.any? && !project.is_descendant_of?(ancestors.last)) 
+            ancestors.pop
+            s << "</ul></li>\n"
+          end
+        end
+        classes = (ancestors.empty? ? 'root' : 'child')
+        s << "<li class='#{classes}'><div class='#{classes}'>" +
+               link_to(h(project), {:controller => 'projects', :action => 'show', :id => project}, :class => "project #{User.current.member_of?(project) ? 'my-project' : nil}")
+        s << "<div class='wiki description'>#{textilizable(project.short_description, :project => project)}</div>" unless project.description.blank?
+        s << "</div>\n"
+        ancestors << project
+      end
+      s << ("</li></ul>\n" * ancestors.size)
+    end
+    s
+  end
+
+
+
+
+
+
+Copyright (c) 2010 [name of plugin creator], released under the MIT license
