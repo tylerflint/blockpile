@@ -7,12 +7,12 @@ Piles of extendable rails view blocks, triggered and masked behind simple helper
 Sometimes within rails, view logic can become complex. As complexity begins to increase, a common theme or pattern occurs:
 
 * View logic begins to grow overly complex for what makes sense in view templates. Lengthy, confusing, and downright dirty views cause you to loose sleep.
-* Logic is broken out of the view templates and placed into the controller.
+* Logic can be broken out of the view templates and placed into the controller.
 * Eventually, when the view logic is needed in another request, the only solution is to pull the entire logic into a helper method.
 
 So what's the problem?
 
-Rails view helpers are great for view logic, and especially for small reusable view components. Unfortunately, complex view logic is almost always a rats nest of logic and string interpolation inside a helper. In fact, I'm still not sure how this has become a viable solution for rails developers, as it seems to go against what I understand to be the "rails way". To their defense, there simply isn't any other way. Until now!
+Rails view helpers are great for view logic, and especially for small reusable view components. Unfortunately, complex view logic is almost always a rats nest of logic and string interpolation. In fact, I'm still not sure how this has become a viable solution for rails developers, as it seems to go against what I understand to be the "rails way". To their defense, there simply isn't any other way. Until now!
 
 To better illustrate the problem, I decided to insert a snippet of a rails view helper from a popular project management tool "Redmine":
 
@@ -42,6 +42,16 @@ To better illustrate the problem, I decided to insert a snippet of a rails view 
     end
     s
   end
+
+So even if you are talented enough to understand what this code is doing, let me ask 2 questions:
+
+* Do you mind if we upgrade the markup language to fit a new design?
+* Even though this is an acceptable solution, does it really feel good to have this nest under your hood?
+
+Before we move on, let me add that I'm not trashing the Redmine code-base. In fact, I chose an example from this project simply because the author is fantastic and this example mirrors at least one helper method in every rails app.
+
+== Enter Blockpile
+
 
 
 
