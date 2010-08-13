@@ -66,9 +66,7 @@ To keep this example simple, I'll show you one way to clean up the example above
 
 === Ruby Class file
 	# app/helpers/blockpiles/project_hierarchy.erb
-	
-	# this is a hypothetical solution to the above helper.
-	
+
 	class ProjectHierarchy < Blockpile::Base
 
 	  def build(options={})
@@ -76,19 +74,19 @@ To keep this example simple, I'll show you one way to clean up the example above
 		@projects = options[:project]
 		prepare_hierarchy
 	  end
-	
+
 	  def prepare_hierarchy
 	    # fill in hierarchy here
 	  end
-	
+
 	  def projects
 		# fill in code
 	  end
-	
-	  def project_children
+
+	  def project_children(project)
 	    # could return project children
 	  end
-	
+
 	end
 
 Here we can take care of all logic, in preparation for the view. We need not interpolate, as the template file will pull data from this class instance when needed. Here we can focus on the beauty and elegance of Ruby, and not on the mixture of presentation.
@@ -103,7 +101,7 @@ Here we can take care of all logic, in preparation for the view. We need not int
 		
 			<li><%= project.name %></li>
 			
-			<% project_children.each do |child| %>
+			<% project_children(project).each do |child| %>
 				<li class="child"><%= child.name %></li>
 			<% end %>
 		

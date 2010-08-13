@@ -9,7 +9,7 @@ class Blockpile::Base
   end
   
   def to_html
-    render_template @template
+    render_template
   end
   
   def build
@@ -19,9 +19,21 @@ class Blockpile::Base
 protected
   
   # Assumes /views/helper/ as base
-  def render_template(template)
-    @path ||= '/app/views/blockpiles/'
-    ERB.new( File.read(Rails.root.to_s + @path + template + ".html.erb") ).result binding
+  def render_template
+    ERB.new( File.read( get_template ) ).result binding
+  end
+  
+  def get_template
+    get_paths.each do |path|
+      if File::exists?( path + "/" + @template + ".html.erb")
+        return path +  "/" + @template + ".html.erb"
+      end
+    end
+    raise "Unable to find template for this blockpile"
+  end
+  
+  def get_paths
+    Blockpile::Paths.get_paths
   end
   
   def method_missing(*args, &block)
