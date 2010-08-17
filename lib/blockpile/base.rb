@@ -1,15 +1,20 @@
 class Blockpile::Base
   
-  def initialize(helper, session, params, template, *args)
+  def initialize(helper, session, params, template, *args, &block)
     @helper = helper
     @session = session
     @params = params
     @template = template
     build *args
+    @content = capture(self, &block) if block_given?
   end
   
   def to_html
     render_template
+  end
+  
+  def get_content
+    @content
   end
   
   def build
