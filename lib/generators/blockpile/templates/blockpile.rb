@@ -1,4 +1,4 @@
-class <%= class_name %> < Blockpile
+class <%= class_name %>Pile < Blockpile::Base
 
   def build(options={})
     
