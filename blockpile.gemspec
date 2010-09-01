@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{blockpile}
-  s.version = "0.4.1"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tyler Flint"]
-  s.date = %q{2010-08-23}
+  s.date = %q{2010-08-31}
   s.description = %q{This module attempts to create structured view helpers. Essentially, a blockpile consists of a ruby class file, and a template. This allows for isolated blocks of view logic, that can maintain a clean separation of markup language from ruby code. Blocks can be inherited from to DRY up view logic.}
   s.email = %q{tylerflint@gmail.com}
   s.extra_rdoc_files = [
