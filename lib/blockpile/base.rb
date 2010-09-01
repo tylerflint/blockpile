@@ -1,8 +1,7 @@
 class Blockpile::Base
   
-  def initialize(helper, template, *args, &block)
+  def initialize(helper, *args, &block)
     @helper = helper
-    @template = template
     build *args
     @content = capture(self, &block) if block_given?
   end
