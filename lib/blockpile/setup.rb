@@ -8,7 +8,7 @@ module Blockpile
         pile_methods =  %{
           def #{file_name.gsub(/\_pile/, '')}(*args, &block)
             blockpile = #{class_name}.new(self, *args, &block)
-            raw blockpile.to_html
+            blockpile.to_html
           end
           
           def #{file_name.gsub(/\_pile/, '')}_instance(*args, &block)
@@ -16,7 +16,7 @@ module Blockpile
           end
         }
         ActionView::Base.class_eval pile_methods
-        ActionController::Base.class_eval pile_methods
+        ActionController::Base.class_eval %{delegate :#{file_name.gsub(/\_pile/, '')}, :#{file_name.gsub(/\_pile/, '')}_instance,:to => :view_context}
       end
     end
   end

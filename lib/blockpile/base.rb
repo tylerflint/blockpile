@@ -22,21 +22,7 @@ protected
   
   # Assumes /views/helper/ as base
   def render_template
-    render( :partial => @template, :locals => {:pile => self, :p => self})
-  end
-  
-  def get_template
-    get_paths.each do |path|
-      if File::exists?( path + "/" + @template + ".html.erb")
-        return path +  "/" + @template
-        puts path +  "/" + @template
-      end
-    end
-    raise "Unable to find template for this blockpile"
-  end
-  
-  def get_paths
-    Blockpile::Paths.get_paths
+    @rendered_template ||= render(:partial => @template, :locals => {:pile => self, :p => self})
   end
   
   def method_missing(*args, &block)
