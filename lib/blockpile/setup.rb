@@ -8,7 +8,12 @@ module Blockpile
         pile_methods =  %{
           def #{file_name.gsub(/\_pile/, '')}(*args, &block)
             blockpile = #{class_name}.new(self, *args, &block)
-            blockpile.to_html
+            case params[:format]
+            when /js|json/
+              raw blockpile.to_json
+            else
+              blockpile.to_html
+            end
           end
           
           def #{file_name.gsub(/\_pile/, '')}_instance(*args, &block)
