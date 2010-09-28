@@ -3,9 +3,7 @@ class Blockpile::Base
   def initialize(helper, *args, &block)
     @helper = helper
     build *args
-    with_format(:html) do
-      @content = capture(self, &block) if block_given?
-    end
+    @content = capture(self, &block) if block_given?
   end
   
   def to_html
